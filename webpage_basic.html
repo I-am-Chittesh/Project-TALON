@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project T.A.L.O.N. Showcase</title>
+    <!-- Chosen Palette: Beige and Slate -->
+    <!-- Application Structure Plan: I've designed this SPA using a fixed sidebar navigation (left) and a main content area (right). This structure is superior to a linear report as it allows non-linear exploration. A user (like a project reviewer) can immediately jump to the "Software," "Hardware," or "Architecture" section based on their interest. The core interaction is this navigation, with JS used to show/hide the relevant content panel. A secondary interaction is on the "Architecture" page, where clicking a system component (Rover, Operator, AI) reveals its specific details, making the diagram itself interactive and engaging. This structure is highly logical and user-friendly for a technical project presentation. -->
+    <!-- Visualization & Content Choices: The source report is a presentation outline (text-based). It contains no quantitative data, so no charts (Chart.js/Plotly) are necessary or appropriate. The focus is on presenting conceptual information clearly.
+        - Report Info: System Architecture (Slide 3) -> Goal: Organize/Relationships -> Viz: Interactive HTML/CSS Diagram -> Interaction: On-click, JS updates a detail panel -> Justification: Far more engaging and clear than a static list. Method: HTML/Tailwind/JS.
+        - Report Info: Hardware/Software/Challenges/Future (Slides 4, 5, 6, 8) -> Goal: Inform/Organize -> Viz: Styled Cards/Lists -> Interaction: None (static display) -> Justification: This content is list-based, and cards are a clean, modern way to present this. Method: HTML/Tailwind.
+        - Report Info: Mission/Demo (Slides 2, 7) -> Goal: Inform -> Viz: Styled text blocks/lists -> Interaction: None -> Justification: Clearest way to present this text. Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        
+        /* Simple smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Active nav link style */
+        .nav-link.active {
+            background-color: #e2e8f0; /* slate-200 */
+            color: #1e293b; /* slate-800 */
+            font-weight: 500;
+        }
+
+        /* Hide all content sections by default */
+        .content-section {
+            display: none;
+        }
+
+        /* Show the active content section */
+        .content-section.active {
+            display: block;
+        }
+
+        /* Custom styles for the architecture diagram */
+        .arch-component {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .arch-component:hover, .arch-component.active {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-color: #3b82f6; /* blue-500 */
+        }
+        
+        .arch-line {
+            height: 2px;
+            background-color: #94a3b8; /* slate-400 */
+            flex-grow: 1;
+        }
+        
+        .arch-line-v {
+            width: 2px;
+            background-color: #94a3b8; /* slate-400 */
+        }
+        
+        /* Hide scrollbar for demo plan */
+        .demo-plan::-webkit-scrollbar {
+            display: none;
+        }
+        .demo-plan {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white md:h-screen md:sticky md:top-0 shadow-lg">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-slate-900">Project T.A.L.O.N.</h1>
+                <p class="text-xs text-slate-500">(Tactical Animal-Locating Optical Navigator)</p>
+            </div>
+            
+            <nav class="mt-4 px-3">
+                <a href="#home" class="nav-link flex items-center px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100 active">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1V9a1 1 0 011-1h2a1 1 0 011 1v10a1 1 0 001 1h3m-6 0V9a1 1 0 011-1h2a1 1 0 011 1v10"></path></svg>
+                    Home
+                </a>
+                <a href="#mission" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    The Mission
+                </a>
+                <a href="#architecture" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Architecture
+                </a>
+                <a href="#hardware" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m-2 6h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                    Hardware
+                </a>
+                <a href="#software" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    Software
+                </a>
+                <a href="#challenges" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    Challenges
+                </a>
+                <a href="#demo" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    Live Demo
+                </a>
+                <a href="#future" class="nav-link flex items-center mt-2 px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    Future Work
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 md:p-10">
+
+            <!-- Home Section -->
+            <section id="home" class="content-section active">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-4xl font-bold text-slate-900 mb-2">Project "T.A.L.O.N."</h2>
+                    <p class="text-lg text-slate-600 mb-6">A Live-Streaming, AI-Powered FPV Rover</p>
+                    <p class="text-slate-700 leading-relaxed">
+                        Welcome to the project showcase for T.A.L.O.N. (Tactical Animal-Locating Optical Navigator). This project is a smart, telerobotic rover that combines remote operation with real-time, AI-powered object detection.
+                        <br><br>
+                        This application will guide you through the project's mission, design, hardware, software, and future potential. Use the navigation on the left to explore any section.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Mission Section -->
+            <section id="mission" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">The Mission</h2>
+                    <p class="text-lg text-slate-600 mb-8">"Can we build a low-cost, smart rover that does more than just drive?"</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                            <h3 class="text-2xl font-bold text-red-800 mb-3">The Problem</h3>
+                            <ul class="list-disc list-inside space-y-2 text-red-700">
+                                <li>Most simple robots are "dumb"—they can't see or understand their environment.</li>
+                                <li>Their capabilities are limited to basic tasks like following a line or avoiding a wall.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                            <h3 class="text-2xl font-bold text-green-800 mb-3">The Goal</h3>
+                            <ul class="list-disc list-inside space-y-2 text-green-700">
+                                <li>Create an intelligent, remote-controlled (telerobotic) system.</li>
+                                <li>The robot must stream live video to an operator.</li>
+                                <li>A separate AI "brain" must watch this stream and identify specific, pre-determined targets in real-time.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-2">System Architecture</h2>
+                    <p class="text-slate-600 mb-8">This is a "co-op" system with three main parts that talk over a Wi-Fi network hosted by the rover itself. Click on any component to learn more.</p>
+
+                    <div class="flex flex-col items-center">
+                        <!-- Interactive Diagram -->
+                        <div class="flex flex-col md:flex-row items-center justify-center w-full">
+                            <!-- Operator -->
+                            <div id="btn-operator" class="arch-component bg-white p-4 rounded-lg shadow border-2 border-slate-200 w-48 text-center m-2">
+                                <h4 class="font-bold text-lg">OPERATOR</h4>
+                                <p class="text-sm text-slate-500">(Your Phone)</p>
+                            </div>
+
+                            <div class="arch-line hidden md:block w-16"></div>
+                            <div class="arch-line-v h-8 md:hidden"></div>
+                            
+                            <!-- Rover -->
+                            <div id="btn-rover" class="arch-component bg-white p-4 rounded-lg shadow border-2 border-slate-200 w-48 text-center m-2 active">
+                                <h4 class="font-bold text-lg">THE ROVER</h4>
+                                <p class="text-sm text-slate-500">(ESP32-CAM)</p>
+                            </div>
+                            
+                            <div class="arch-line hidden md:block w-16"></div>
+                            <div class="arch-line-v h-8 md:hidden"></div>
+
+                            <!-- AI Brain -->
+                            <div id="btn-ai" class="arch-component bg-white p-4 rounded-lg shadow border-2 border-slate-200 w-48 text-center m-2">
+                                <h4 class="font-bold text-lg">AI BRAIN</h4>
+                                <p class="text-sm text-slate-500">(Your Laptop)</p>
+                            </div>
+                        </div>
+
+                        <!-- Details Panel -->
+                        <div class="w-full max-w-2xl mt-8 p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <div id="detail-rover" class="arch-detail">
+                                <h3 class="text-2xl font-bold text-slate-800 mb-3">The Rover (ESP32-CAM)</h3>
+                                <ul class="list-disc list-inside space-y-2 text-slate-700">
+                                    <li>Acts as the central hub of the entire system.</li>
+                                    <li>Hosts its own Wi-Fi Access Point (SSID: `Robot_FPV_Control`).</li>
+                                    <li>Streams live video from its camera via a web server.</li>
+                                    <li>Listens for and executes motor commands sent over HTTP.</li>
+                                </ul>
+                            </div>
+                            <div id="detail-operator" class="arch-detail hidden">
+                                <h3 class="text-2xl font-bold text-slate-800 mb-3">The Operator (Your Phone)</h3>
+                                <ul class="list-disc list-inside space-y-2 text-slate-700">
+                                    <li>Connects directly to the robot's Wi-Fi network.</li>
+                                    <li>Loads a webpage served by the ESP32 (at `192.168.4.1`).</li>
+                                    <li>This webpage contains a virtual joystick for real-time control.</li>
+                                    <li>Sends `Forward`, `Left`, `Right`, and `Stop` commands to the rover.</li>
+                                </ul>
+                            </div>
+                            <div id="detail-ai" class="arch-detail hidden">
+                                <h3 class="text-2xl font-bold text-slate-800 mb-3">The AI Brain (Your Laptop)</h3>
+                                <ul class="list-disc list-inside space-y-2 text-slate-700">
+                                    <li>Also connects to the robot's Wi-Fi network.</li>
+                                    <li>Pulls the *same* live video stream that the phone would see.</li>
+                                    <li>Runs a Python script using OpenCV, cvlib, and TensorFlow.</li>
+                                    <li>Analyzes the video feed in real-time to find specified targets (e.g., "cat").</li>
+                                    <li>Displays the video with bounding boxes and "TARGET ACQUIRED" text.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hardware Section -->
+            <section id="hardware" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Hardware Components</h2>
+                    <p class="text-slate-600 mb-8">A simple build using low-cost, high-power components. The "secret" to success is the two-part power system to prevent stability issues.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-bold text-slate-800">Brain & Vision</h4>
+                            <p class="text-slate-600">ESP32-CAM: An all-in-one camera, CPU, and Wi-Fi module.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-bold text-slate-800">Chassis</h4>
+                            <p class="text-slate-600">A standard 2WD Robot Chassis with two motors and a caster wheel.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-bold text-slate-800">Motor Control</h4>
+                            <p class="text-slate-600">L298N Motor Driver to interface between the ESP32 and the motors.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-bold text-slate-800">Rover Power</h4>
+                            <p class="text-slate-600">1x 5V USB Power Bank for the power-hungry ESP32-CAM.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-bold text-slate-800">Motor Power</h4>
+                            <p class="text-slate-600">1x 4xAA Battery Pack (or LiPo) for the motors via the L298N.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Software Section -->
+            <section id="software" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">The Software Stack</h2>
+                    <p class="text-slate-600 mb-8">Two main codebases work together to bring the robot to life.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-blue-50 rounded-lg border border-blue-200">
+                            <h3 class="text-2xl font-bold text-blue-800 mb-3">1. The Rover Code</h3>
+                            <p class="font-medium text-blue-700 mb-3">(Arduino / C++) - `esp32_cam_robot.ino`</p>
+                            <ul class="list-disc list-inside space-y-2 text-blue-700">
+                                <li>Uses `WebServer.h` to host the HTML/CSS/JS for the virtual joystick.</li>
+                                <li>Uses `esp_camera.h` to initialize and stream the live video.</li>
+                                <li>Listens for HTTP GET requests (e.g., `/control?cmd=forward`) to drive the motors.</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-green-50 rounded-lg border border-green-200">
+                            <h3 class="text-2xl font-bold text-green-800 mb-3">2. The AI Brain</h3>
+                            <p class="font-medium text-green-700 mb-3">(Python) - `animal_finder.py`</p>
+                            <ul class="list-disc list-inside space-y-2 text-green-700">
+                                <li>Uses `urllib` to tap into the camera's `/stream` URL.</li>
+                                <li>Uses `cvlib` and `tensorflow` to run a pre-trained `yolov4-tiny` model.</li>
+                                <li>Prompts the user for a target (`cat`, `dog`, `bird`).</li>
+                                <li>Uses `OpenCV` to draw bounding boxes and "TARGET ACQUIRED" text on the video feed.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Challenges Section -->
+            <section id="challenges" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Key Challenges & Solutions</h2>
+                    <p class="text-slate-600 mb-8">Every project has its hurdles. Here's how we solved the main ones.</p>
+                    <div class="space-y-6">
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-xl font-bold text-slate-800 mb-2">Power Stability</h4>
+                            <p class="text-slate-700"><strong class="text-red-600">Problem:</strong> The ESP32-CAM reboots constantly if the power is unstable (a "brownout"), especially when Wi-Fi and the camera are active.</p>
+                            <p class="text-slate-700 mt-2"><strong class="text-green-600">Solution:</strong> Using two separate, dedicated power sources: a 5V USB power bank for the ESP32 and a separate battery pack for the motors.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-xl font-bold text-slate-800 mb-2">Video Stream Lag</h4>
+                            <p class="text-slate-700"><strong class="text-red-600">Problem:</strong> The live video stream can have a 1-2 second delay, making the robot very difficult to drive in real-time.</p>
+                            <p class="text-slate-700 mt-2"><strong class="text-green-600">Solution:</strong> Forcing the camera to a low-resolution `FRAMESIZE_QVGA` (320x240) in the Arduino code. This significantly reduces bandwidth and lag, providing a much higher frame rate.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="text-xl font-bold text-slate-800 mb-2">Python Dependencies</h4>
+                            <p class="text-slate-700"><strong class="text-red-600">Problem:</strong> `tensorflow` is a large and complex library with many dependencies that can be difficult to install correctly.</p>
+                            <p class="text-slate-700 mt-2"><strong class="text-green-600">Solution:</strong> Carefully ensuring all libraries (`cvlib`, `opencv`, `tensorflow`) were installed and compatible with the specific Python version (3.11).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo Section -->
+            <section id="demo" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Live Demo Plan</h2>
+                    <p class="text-slate-600 mb-8">This is how the full "co-op" system works in practice.</p>
+                    <div class="bg-slate-800 p-6 rounded-lg demo-plan max-h-[400px] overflow-y-auto">
+                        <ol class="list-decimal list-outside text-slate-200 space-y-4 ml-6">
+                            <li class="pl-2">
+                                <span class="font-medium text-white">Power On Robot:</span> The ESP32-CAM boots up and creates its Wi-Fi hotspot.
+                            </li>
+                            <li class="pl-2">
+                                <span class="font-medium text-white">Start AI Brain:</span> Run the Python script on the laptop. It will connect to the robot's Wi-Fi and ask for a target (e.g., "cat").
+                            </li>
+                            <li class="pl-2">
+                                <span class="font-medium text-white">Connect Operator:</span> Connect the phone to the robot's Wi-Fi.
+                            </li>
+                            <li class="pl-2">
+                                <span class="font-medium text-white">Show AI Feed:</span> The laptop screen now shows the robot's first-person view, with the AI actively scanning for the target.
+                            </li>
+                            <li class="pl-2">
+                                <span class="font-medium text-white">Drive Robot:</span> Use the phone's virtual joystick to drive the robot around.
+                            </li>
+                            <li class="pl-2">
+                                <span class="font-medium text-white">Find Target:</span> Point the robot at a picture of a cat. The AI feed on the laptop will light up with a "TARGET ACQUIRED" message.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Future Section -->
+            <section id="future" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Future Improvements</h2>
+                    <p class="text-slate-600 mb-8">This project is a great platform. Here are the logical next steps.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">&#10004;</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Full Autonomy</h4>
+                                <p class="text-slate-600">Have the Python script send an HTTP command back to the robot (e.g., `/stop` or `/celebrate`) the moment the target is found.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">&#10004;</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">On-Board AI</h4>
+                                <p class="text-slate-600">Use a more powerful board (like a Raspberry Pi or ESP32-S3) to run the AI model *on the robot itself*, removing the need for the laptop.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">&#10004;</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">"Search and Rescue" Mode</h4>
+                                <p class="text-slate-600">Add a servo and gripper. When the target is found, the robot can autonomously approach and "rescue" it.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">&#10004;</span>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Acoustic Feedback</h4>
+                                <p class="text-slate-600">Add a buzzer to the robot that beeps when the AI finds the target, giving the operator an audio cue.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Thank You Section (Hidden, for completeness) -->
+            <section id="thankyou" class="content-section">
+                <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                    <h2 class="text-4xl font-bold text-slate-900 mb-4">Project "T.A.L.O.N."</h2>
+                    <p class="text-3xl text-slate-600">Thank you!</p>
+                    <p class="text-3xl text-slate-600 mt-4">Questions?</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        const defaultSection = 'home';
+
+        // Function to show a section
+        function showSection(sectionId) {
+            contentSections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                if (link.hash === `#${sectionId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Handle navigation clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.hash.substring(1);
+                showSection(sectionId);
+                
+                // For mobile, scroll to content
+                if (window.innerWidth < 768) {
+                    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Show default section on load
+        showSection(defaultSection);
+
+        // --- Interactive Architecture Diagram Logic ---
+        const archBtns = {
+            rover: document.getElementById('btn-rover'),
+            operator: document.getElementById('btn-operator'),
+            ai: document.getElementById('btn-ai')
+        };
+        
+        const archDetails = {
+            rover: document.getElementById('detail-rover'),
+            operator: document.getElementById('detail-operator'),
+            ai: document.getElementById('detail-ai')
+        };
+
+        function showArchDetail(detailId) {
+            // Hide all details
+            Object.values(archDetails).forEach(detail => detail.classList.add('hidden'));
+            // Deactivate all buttons
+            Object.values(archBtns).forEach(btn => btn.classList.remove('active', 'border-blue-500'));
+
+            // Show selected detail
+            if (archDetails[detailId]) {
+                archDetails[detailId].classList.remove('hidden');
+            }
+            // Activate selected button
+            if (archBtns[detailId]) {
+                archBtns[detailId].classList.add('active', 'border-blue-500');
+            }
+        }
+
+        archBtns.rover.addEventListener('click', () => showArchDetail('rover'));
+        archBtns.operator.addEventListener('click', () => showArchDetail('operator'));
+        archBtns.ai.addEventListener('click', () => showArchDetail('ai'));
+
+        // Show rover detail by default
+        showArchDetail('rover');
+    });
+</script>
+
+</body>
+</html>
