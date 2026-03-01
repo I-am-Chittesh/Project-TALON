@@ -1,0 +1,238 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>T.A.L.O.N — Smart Field Surveillance</title>
+        <meta name="description"
+            content="T.A.L.O.N — a low-cost AI rover for wildlife monitoring, agricultural surveillance, and pest detection. Edge AI, live streaming, remote control." />
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+
+    <body>
+
+        <!-- NAV -->
+        <nav class="nav" id="nav">
+            <div class="wrap">
+                <a href="index.html" class="nav-brand">T.A.L.<span class="mark">O.N</span></a>
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html" class="cur">Product</a>
+                    <a href="camera.html">Camera</a>
+                    <a href="impact.html">Impact</a>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;">
+                    <button class="theme-switch" aria-label="Toggle theme">
+                        <div class="switch-knob">
+                            <svg class="icon-sun" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="4" />
+                                <path
+                                    d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                            </svg>
+                            <svg class="icon-moon" viewBox="0 0 24 24">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+                        </div>
+                    </button>
+                    <button class="burger" id="burger" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-grid"></div>
+            <div class="wrap hero-inner">
+                <div class="hero-label">Field surveillance system</div>
+                <h1>Autonomous <em>AI</em> rover. Codename <em>T.A.L.O.N</em></h1>
+                <p class="hero-desc">
+                    A low-cost rover that streams live video via ESP32-CAM, runs on-device animal
+                    detection using YOLO/TFLite, and enables remote monitoring for farms, forests,
+                    and protected areas.
+                </p>
+                <div class="hero-typed-wrap">
+                    <span class="typed-txt"></span><span class="caret"></span>
+                </div>
+                <div class="hero-actions">
+                    <a href="#pipeline" class="btn btn-fill">How it works</a>
+                    <a href="impact.html" class="btn btn-ghost">View impact data</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT THE BOT DOES -->
+        <section class="sec">
+            <div class="wrap">
+                <div class="rv">
+                    <div class="sec-label">Capabilities</div>
+                    <h2 class="sec-title">What the rover does.</h2>
+                    <p class="sec-desc">Three integrated functions that turn a mobile platform into an intelligent
+                        surveillance unit.</p>
+                </div>
+
+                <div class="g3 stg">
+                    <div class="card rv">
+                        <div class="card-num">01</div>
+                        <h3>Live Video Streaming</h3>
+                        <p>Captures and transmits real-time video via ESP32-CAM over Wi-Fi, providing continuous visual
+                            coverage of monitored areas.</p>
+                    </div>
+                    <div class="card rv">
+                        <div class="card-num">02</div>
+                        <h3>AI-Powered Detection</h3>
+                        <p>Runs on-device animal and intrusion detection using YOLO/TFLite on Raspberry Pi or Jetson Nano
+                            for instant classification.</p>
+                    </div>
+                    <div class="card rv">
+                        <div class="card-num">03</div>
+                        <h3>Remote Control</h3>
+                        <p>Operators remotely view feeds, receive alerts, and control rover movement from any connected
+                            device on the network.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="rule"></div>
+
+        <!-- HOW IT WORKS -->
+        <section class="sec" id="pipeline">
+            <div class="wrap">
+                <div class="rv">
+                    <div class="sec-label">Pipeline</div>
+                    <h2 class="sec-title">How it works.</h2>
+                    <p class="sec-desc">From camera capture to intelligent action — a streamlined edge-AI pipeline.</p>
+                </div>
+
+                <div class="pipeline rv">
+                    <div class="pipe-step">
+                        <div class="ps-num">STEP 01</div>
+                        <h4>Camera Capture</h4>
+                        <p>ESP32-CAM captures video frames and streams over Wi-Fi</p>
+                    </div>
+                    <div class="pipe-step">
+                        <div class="ps-num">STEP 02</div>
+                        <h4>Wi-Fi Stream</h4>
+                        <p>Live video transmitted to the edge device in real time</p>
+                    </div>
+                    <div class="pipe-step">
+                        <div class="ps-num">STEP 03</div>
+                        <h4>Edge Inference</h4>
+                        <p>YOLO / TFLite model detects animals, humans, or anomalies</p>
+                    </div>
+                    <div class="pipe-step">
+                        <div class="ps-num">STEP 04</div>
+                        <h4>Alerts &amp; Action</h4>
+                        <p>Triggers alerts, logs events, or adjusts movement autonomously</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="rule"></div>
+
+        <!-- TECH STACK -->
+        <section class="sec">
+            <div class="wrap">
+                <div class="rv">
+                    <div class="sec-label">Stack</div>
+                    <h2 class="sec-title">Technology.</h2>
+                    <p class="sec-desc">Proven hardware and open-source software for reliable field deployment.</p>
+                </div>
+
+                <div class="tech-row stg">
+                    <div class="tech-item rv">
+                        <h4>ESP32-CAM</h4>
+                        <p>Low-cost Wi-Fi camera module for live video streaming and image capture</p>
+                    </div>
+                    <div class="tech-item rv">
+                        <h4>RPi / Jetson Nano</h4>
+                        <p>Edge computing platform for running AI inference models locally</p>
+                    </div>
+                    <div class="tech-item rv">
+                        <h4>Python + OpenCV</h4>
+                        <p>Video processing, frame analysis, and computer vision pipeline</p>
+                    </div>
+                    <div class="tech-item rv">
+                        <h4>YOLO / TFLite</h4>
+                        <p>Real-time object detection optimized for resource-constrained devices</p>
+                    </div>
+                    <div class="tech-item rv">
+                        <h4>MQTT / HTTP</h4>
+                        <p>Lightweight communication protocols for command and telemetry exchange</p>
+                    </div>
+                    <div class="tech-item rv">
+                        <h4>DC Motors + Driver</h4>
+                        <p>Motor control system for directional movement and terrain navigation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="rule"></div>
+
+        <!-- USE CASES -->
+        <section class="sec">
+            <div class="wrap">
+                <div class="rv">
+                    <div class="sec-label">Applications</div>
+                    <h2 class="sec-title">Deployment scenarios.</h2>
+                    <p class="sec-desc">Versatile enough for diverse environments — from national parks to open farmlands.
+                    </p>
+                </div>
+
+                <div class="use-list stg">
+                    <div class="use-item rv">
+                        <div class="u-idx">01</div>
+                        <div>
+                            <h4>Wildlife Monitoring</h4>
+                            <p>Track animal movements, detect poaching activity, and monitor biodiversity in forests and
+                                reserves.</p>
+                        </div>
+                    </div>
+                    <div class="use-item rv">
+                        <div class="u-idx">02</div>
+                        <div>
+                            <h4>Farm Surveillance</h4>
+                            <p>Patrol agricultural fields to detect pest intrusions, livestock threats, and unauthorized
+                                access.</p>
+                        </div>
+                    </div>
+                    <div class="use-item rv">
+                        <div class="u-idx">03</div>
+                        <div>
+                            <h4>Pest Detection</h4>
+                            <p>Identify crop-damaging animals and insects early, enabling targeted and timely response.</p>
+                        </div>
+                    </div>
+                    <div class="use-item rv">
+                        <div class="u-idx">04</div>
+                        <div>
+                            <h4>Remote Inspection</h4>
+                            <p>Reach difficult terrain for infrastructure checks, environmental surveys, and hazard
+                                assessments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="foot">
+            <div class="wrap">
+                <div class="foot-brand">T.A.L.<span class="mark">O.N</span></div>
+                <div class="foot-links">
+                    <a href="index.html">Product</a>
+                    <a href="camera.html">Camera</a>
+                    <a href="impact.html">Impact</a>
+                </div>
+                <div class="foot-copy">&copy; 2026 T.A.L.O.N Project</div>
+            </div>
+        </footer>
+
+        <script src="js/main.js"></script>
+    </body>
+
+    </html>

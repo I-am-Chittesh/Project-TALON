@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera Feed — T.A.L.O.N</title>
+    <meta name="description"
+        content="Live rover camera feed placeholder with AI detection overlay support for real-time wildlife and intrusion monitoring." />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav pinned" id="nav">
+        <div class="wrap">
+            <a href="index.html" class="nav-brand">T.A.L.<span class="mark">O.N</span></a>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html">Product</a>
+                <a href="camera.html" class="cur">Camera</a>
+                <a href="impact.html">Impact</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+                <button class="theme-switch" aria-label="Toggle theme">
+                    <div class="switch-knob">
+                        <svg class="icon-sun" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="4" />
+                            <path
+                                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </div>
+                </button>
+                <button class="burger" id="burger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CAMERA PAGE -->
+    <section class="sec cam-page">
+        <div class="wrap">
+
+            <div class="rv">
+                <div class="sec-label">Live feed</div>
+                <h2 class="sec-title">Rover camera.</h2>
+                <p class="sec-desc">Real-time visual monitoring from the onboard ESP32-CAM module.</p>
+            </div>
+
+            <!-- placeholder -->
+            <div class="cam-box rv">
+                <div class="sweep"></div>
+                <div class="cam-badge">OFFLINE</div>
+                <div class="cam-msg">Live video feed will appear here when the rover is connected.</div>
+                <div class="cam-sub">Awaiting ESP32-CAM stream on the local network</div>
+            </div>
+
+            <!-- status -->
+            <div class="status-row rv">
+                <div class="si">
+                    <div class="dot"></div>
+                    <span>Connection</span>
+                    <span class="val">Disconnected</span>
+                </div>
+                <div class="si">
+                    <div class="dot"></div>
+                    <span>Battery</span>
+                    <span class="val">N/A</span>
+                </div>
+                <div class="si">
+                    <div class="dot"></div>
+                    <span>Signal</span>
+                    <span class="val">N/A</span>
+                </div>
+                <div class="si">
+                    <div class="dot"></div>
+                    <span>AI Model</span>
+                    <span class="val">Not loaded</span>
+                </div>
+            </div>
+
+            <!-- feature notes -->
+            <div class="g3 stg" style="margin-top:12px;">
+                <div class="card rv">
+                    <div class="card-num">01</div>
+                    <h3>Real-Time Stream</h3>
+                    <p>ESP32-CAM streams video frames over Wi-Fi at up to 30 fps, viewable from any browser on the
+                        network.</p>
+                </div>
+                <div class="card rv">
+                    <div class="card-num">02</div>
+                    <h3>Detection Overlays</h3>
+                    <p>Bounding boxes and labels from YOLO/TFLite are rendered onto the feed for instant visual
+                        feedback.</p>
+                </div>
+                <div class="card rv">
+                    <div class="card-num">03</div>
+                    <h3>Remote Dashboard</h3>
+                    <p>Future integration with a full dashboard for multi-rover control, telemetry, and alert history.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="foot">
+        <div class="wrap">
+            <div class="foot-brand">T.A.L.<span class="mark">O.N</span></div>
+            <div class="foot-links">
+                <a href="index.html">Product</a>
+                <a href="camera.html">Camera</a>
+                <a href="impact.html">Impact</a>
+            </div>
+            <div class="foot-copy">&copy; 2026 T.A.L.O.N Project</div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
